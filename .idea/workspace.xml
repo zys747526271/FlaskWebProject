@@ -4,24 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e89ab95c-34ca-49cd-a99a-dc4750519b36" name="更改" comment="目前能进入页面，但有很多bug，仅支持注册功能">
-      <change afterPath="$PROJECT_DIR$/backend/utils/miyao.py" afterDir="false" />
+    <list default="true" id="e89ab95c-34ca-49cd-a99a-dc4750519b36" name="更改" comment="支持注册、登录操作，但有报错">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/auth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/product.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/decorators.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/decorators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/recommender.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/_metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/element-plus.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/element-plus.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/layout/MainLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/layout/MainLayout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/views/auth/LoginPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/auth/LoginPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/views/auth/RegisterPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/auth/RegisterPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/views/home/HomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/home/HomePage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,10 +23,25 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="前端功能" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;zys747526271&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:/zys747526271/FlaskWebProject.git&quot;,
+    &quot;accountId&quot;: &quot;74e5b532-b14f-4903-a51b-fab619211aef&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/backend/app.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -63,7 +62,8 @@
     "Python.miyao.executor": "Run",
     "Python.run.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "前端功能"
+    "git-widget-placeholder": "master",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -207,11 +207,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app" />
-        <item itemvalue="Python.miyao" />
-        <item itemvalue="Python.auth" />
-        <item itemvalue="Python.manage" />
         <item itemvalue="Python.run" />
+        <item itemvalue="Python.miyao" />
+        <item itemvalue="Python.manage" />
+        <item itemvalue="Python.auth" />
+        <item itemvalue="Python.app" />
       </list>
     </recent_temporary>
   </component>
@@ -249,6 +249,29 @@
     </task>
     <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="前端功能" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="目前能进入页面，但有很多bug，仅支持注册功能" />
