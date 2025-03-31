@@ -1,0 +1,48 @@
+/* 主样式文件 */
+
+// 变量
+$primary-color: #409EFF;
+$success-color: #67C23A;
+$warning-color: #E6A23C;
+$danger-color: #F56C6C;
+$info-color: #909399;
+
+$text-primary: #303133;
+$text-regular: #606266;
+$text-secondary: #909399;
+
+$border-color: #DCDFE6;
+$background-color: #F5F7FA;
+
+// 全局样式
+body {
+  color: $text-regular;
+  background-color: $background-color;
+}
+
+// 通用类
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+// 响应式布局
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+}
