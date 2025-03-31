@@ -84,14 +84,14 @@ const rememberMe = ref(false)
 
 // 表单数据
 const loginForm = reactive({
-  username: '',
+  phone: '',
   password: ''
 })
 
 // 表单验证规则
 const loginRules = {
-  username: [
-    { required: true, message: '请输入用户名或邮箱', trigger: 'blur' }
+  phone: [
+    { required: true, message: '请输入手机号', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
@@ -107,10 +107,10 @@ onMounted(() => {
     router.push(redirectPath)
   }
   
-  // 从本地存储获取记住的用户名
-  const rememberedUsername = localStorage.getItem('rememberedUsername')
-  if (rememberedUsername) {
-    loginForm.username = rememberedUsername
+  // 从本地存储获取记住的手机号
+  const rememberedPhone = localStorage.getItem('rememberedPhone')
+  if (rememberedPhone) {
+    loginForm.phone = rememberedPhone
     rememberMe.value = true
   }
 })
@@ -126,16 +126,16 @@ const handleLogin = async () => {
       
       try {
         const result = await userStore.login({
-          username: loginForm.username,
+          phone: loginForm.phone,
           password: loginForm.password
         })
         
         if (result.success) {
-          // 记住用户名
+          // 记住手机号
           if (rememberMe.value) {
-            localStorage.setItem('rememberedUsername', loginForm.username)
+            localStorage.setItem('rememberedPhone', loginForm.phone)
           } else {
-            localStorage.removeItem('rememberedUsername')
+            localStorage.removeItem('rememberedPhone')
           }
           
           ElMessage.success('登录成功')

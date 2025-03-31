@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e89ab95c-34ca-49cd-a99a-dc4750519b36" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/flaskProject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/templates/index.html" afterDir="false" />
+    <list default="true" id="e89ab95c-34ca-49cd-a99a-dc4750519b36" name="更改" comment="目前能进入页面，但有很多bug，仅支持注册功能">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/auth/LoginPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/auth/LoginPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +22,13 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -40,18 +39,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.auth.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.manage (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.manage.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.app.executor": "Run",
+    "Python.auth.executor": "Debug",
+    "Python.manage (1).executor": "Run",
+    "Python.manage.executor": "Run",
+    "Python.run.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "前端功能"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Project\Demo2\flaskProject\backend" />
@@ -194,6 +193,27 @@
       <option name="presentableId" value="Default" />
       <updated>1742967963619</updated>
     </task>
+    <task id="LOCAL-00001" summary="目前能进入页面，但有很多bug，仅支持注册功能">
+      <option name="closed" value="true" />
+      <created>1743391568509</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743391568509</updated>
+    </task>
+    <task id="LOCAL-00002" summary="目前能进入页面，但有很多bug，仅支持注册功能">
+      <option name="closed" value="true" />
+      <created>1743391680763</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743391680763</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="目前能进入页面，但有很多bug，仅支持注册功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="目前能进入页面，但有很多bug，仅支持注册功能" />
   </component>
 </project>
