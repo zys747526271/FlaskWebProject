@@ -29,7 +29,7 @@
             prefix-icon="User"
           />
         </el-form-item>
-        
+
         <el-form-item prop="email">
           <el-input
             v-model="registerForm.email"
@@ -37,7 +37,7 @@
             prefix-icon="Message"
           />
         </el-form-item>
-        
+
         <el-form-item prop="password">
           <el-input
             v-model="registerForm.password"
@@ -47,7 +47,7 @@
             show-password
           />
         </el-form-item>
-        
+
         <el-form-item prop="confirmPassword">
           <el-input
             v-model="registerForm.confirmPassword"
@@ -57,7 +57,7 @@
             show-password
           />
         </el-form-item>
-        
+
         <el-form-item prop="phone">
           <el-input
             v-model="registerForm.phone"
@@ -65,7 +65,7 @@
             prefix-icon="Phone"
           />
         </el-form-item>
-        
+
         <el-form-item prop="nickname">
           <el-input
             v-model="registerForm.nickname"
@@ -73,7 +73,7 @@
             prefix-icon="User"
           />
         </el-form-item>
-        
+
         <el-form-item prop="captcha" class="captcha-item">
           <div class="captcha-container">
             <el-input
@@ -81,9 +81,9 @@
               placeholder="验证码"
               class="captcha-input"
             />
-            <el-button 
-              type="primary" 
-              class="captcha-button" 
+            <el-button
+              type="primary"
+              class="captcha-button"
               :disabled="captchaLoading || captchaCountdown > 0"
               @click="getCaptcha"
             >
@@ -91,7 +91,7 @@
             </el-button>
           </div>
         </el-form-item>
-        
+
         <el-form-item>
           <el-button
             type="primary"
@@ -101,7 +101,7 @@
           >注册</el-button>
         </el-form-item>
       </el-form>
-      
+
       <div class="register-footer">
         <p>已有账号？ <router-link to="/auth/login">立即登录</router-link></p>
         <p><router-link to="/">返回首页</router-link></p>
@@ -205,19 +205,19 @@ const getCaptcha = async () => {
     ElMessage.warning('请先输入手机号码')
     return
   }
-  
+
   const phoneReg = /^1[3-9]\d{9}$/
   if (!phoneReg.test(registerForm.phone)) {
     ElMessage.warning('请输入有效的手机号码')
     return
   }
-  
+
   captchaLoading.value = true
   try {
     const response = await axios.post('/api/auth/captcha', {
       phone: registerForm.phone
     })
-    
+
     if (response.data.success) {
       ElMessage.success('验证码已发送，请注意查收')
       // 开始倒计时
@@ -242,12 +242,12 @@ const getCaptcha = async () => {
 // 注册处理
 const handleRegister = async () => {
   if (!registerFormRef.value) return
-  
+
   await registerFormRef.value.validate(async (valid) => {
     if (valid) {
       loading.value = true
       registerError.value = false
-      
+
       try {
         const userData = {
           nickname: registerForm.nickname,
@@ -257,9 +257,9 @@ const handleRegister = async () => {
           phone: registerForm.phone,
           captcha: registerForm.captcha
         }
-        
+
         const result = await userStore.register(userData)
-        
+
         if (result.success) {
           ElMessage.success('注册成功，请登录')
           router.push('/auth/login')

@@ -21,7 +21,7 @@
           :closable="false"
           style="margin-bottom: 15px"
         />
-        
+
         <el-form-item prop="phone">
           <el-input
             v-model="loginForm.phone"
@@ -29,7 +29,7 @@
             prefix-icon="User"
           />
         </el-form-item>
-        
+
         <el-form-item prop="password">
           <el-input
             v-model="loginForm.password"
@@ -39,12 +39,12 @@
             show-password
           />
         </el-form-item>
-        
+
         <div class="form-options">
           <el-checkbox v-model="rememberMe">记住我</el-checkbox>
           <el-button type="text" @click="forgotPassword">忘记密码？</el-button>
         </div>
-        
+
         <el-form-item>
           <el-button
             type="primary"
@@ -54,7 +54,7 @@
           >登录</el-button>
         </el-form-item>
       </el-form>
-      
+
       <div class="login-footer">
         <p>还没有账号？ <router-link to="/auth/register">立即注册</router-link></p>
         <p><router-link to="/">返回首页</router-link></p>
@@ -66,32 +66,27 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useUserStore } from '@/stores/user'
 import { ElMessage } from 'element-plus'
+import axios from 'axios'
 
 const router = useRouter()
 const route = useRoute()
-const userStore = useUserStore()
 
-// 表单引用
 const loginFormRef = ref(null)
-
-// 状态
 const loading = ref(false)
 const loginError = ref(false)
 const errorMessage = ref('')
 const rememberMe = ref(false)
 
-// 表单数据
 const loginForm = reactive({
   phone: '',
   password: ''
 })
 
-// 表单验证规则
 const loginRules = {
   phone: [
-    { required: true, message: '请输入手机号', trigger: 'blur' }
+    { required: true, message: '请输入手机号', trigger: 'blur' },
+    { pattern: /^1[3-9]\d{9}$/, message: '请输入有效的手机号', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
@@ -99,15 +94,7 @@ const loginRules = {
   ]
 }
 
-// 初始化
 onMounted(() => {
-  // 如果已经登录，跳转到首页或重定向页面
-  if (userStore.isAuthenticated) {
-    const redirectPath = route.query.redirect || '/'
-    router.push(redirectPath)
-  }
-  
-  // 从本地存储获取记住的手机号
   const rememberedPhone = localStorage.getItem('rememberedPhone')
   if (rememberedPhone) {
     loginForm.phone = rememberedPhone
@@ -115,42 +102,39 @@ onMounted(() => {
   }
 })
 
-// 登录处理
 const handleLogin = async () => {
   if (!loginFormRef.value) return
-  
+
   await loginFormRef.value.validate(async (valid) => {
     if (valid) {
       loading.value = true
       loginError.value = false
-      
+
       try {
-        const result = await userStore.login({
+        const response = await axios.post('/api/auth/login', {
           phone: loginForm.phone,
           password: loginForm.password
         })
-        
-        if (result.success) {
-          // 记住手机号
+
+        if (response.data.success) {
+          localStorage.setItem('token', response.data.data.token)
           if (rememberMe.value) {
             localStorage.setItem('rememberedPhone', loginForm.phone)
           } else {
             localStorage.removeItem('rememberedPhone')
           }
-          
+
           ElMessage.success('登录成功')
-          
-          // 跳转到重定向页面或首页
           const redirectPath = route.query.redirect || '/'
           router.push(redirectPath)
         } else {
           loginError.value = true
-          errorMessage.value = result.message
+          errorMessage.value = response.data.message
         }
       } catch (error) {
         console.error('登录失败:', error)
         loginError.value = true
-        errorMessage.value = '登录失败，请稍后再试'
+        errorMessage.value = error.response?.data?.message || '登录失败，请稍后再试'
       } finally {
         loading.value = false
       }
@@ -158,10 +142,17 @@ const handleLogin = async () => {
   })
 }
 
-// 忘记密码
 const forgotPassword = () => {
   ElMessage.info('请联系管理员重置密码')
 }
+
+axios.interceptors.request.use(config => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+}, error => Promise.reject(error))
 </script>
 
 <style scoped>

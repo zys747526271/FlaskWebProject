@@ -8,6 +8,7 @@ from datetime import datetime
 from cryptography.fernet import Fernet
 import redis
 import logging
+from datetime import timedelta
 
 auth_bp = Blueprint('auth', __name__)
 logger = logging.getLogger(__name__)
@@ -68,31 +69,12 @@ def get_captcha():
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    """用户注册
-
-    Args:
-        nickname (str): 昵称
-        phone (str): 手机号
-        password (str): 密码
-        captcha (str): 验证码
-        email (str, optional): 邮箱
-        gender (str, optional): 性别
-        avatar_url (str, optional): 头像URL
-        id_card (str, optional): 身份证号
-
-    Returns:
-        JSON: 注册结果
-    """
     data = request.get_json()
-    required_fields = ['nickname', 'phone', 'password', 'captcha']
+    required_fields = ['nickname', 'phone', 'password']
     if not data or not all(field in data for field in required_fields):
         return json_response(False, f'缺少必填字段: {", ".join(required_fields)}', status=400)
 
-    if not verify_code(data['phone'], data['captcha']):
-        return json_response(False, '验证码错误或已过期', status=400)
-
-    encrypted_phone = encrypt_data(data['phone'])
-    if User.query.filter_by(phone=encrypted_phone).first():
+    if User.query.filter_by(phone=data['phone']).first():
         return json_response(False, '该手机号已注册', status=400)
 
     if 'email' in data and data['email'] and User.query.filter_by(email=data['email']).first():
@@ -102,12 +84,10 @@ def register():
     new_user = User(
         quick_id=quick_id,
         nickname=data['nickname'],
-        phone=encrypted_phone,
-        password=data['password'],
+        phone=data['phone'],  # 直接存储明文
+        password=data['password'],  # 会自动哈希
         email=data.get('email'),
-        gender=data.get('gender', '未设置'),
         avatar_url=data.get('avatar_url'),
-        id_card=encrypt_data(data.get('id_card')),
         register_time=datetime.utcnow()
     )
 
@@ -128,24 +108,22 @@ def register():
         logger.error(f"User registration failed: {str(e)}")
         return json_response(False, f'注册失败: {str(e)}', status=500)
 
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
-    """用户登录
-
-    Args:
-        phone (str): 手机号
-        password (str): 密码
-
-    Returns:
-        JSON: 登录结果
-    """
     data = request.get_json()
     if not data or 'phone' not in data or 'password' not in data:
         return json_response(False, '请提供手机号和密码', status=400)
 
-    encrypted_phone = encrypt_data(data['phone'])
-    user = User.query.filter_by(phone=encrypted_phone, is_deleted=False).first()
-    if not user or not user.verify_password(data['password']):
+    logger.info(f"Received login data: {data}")
+    user = User.query.filter_by(phone=data['phone'], is_deleted=False).first()
+
+    if not user:
+        logger.info(f"No user found with phone: {data['phone']}")
+        return json_response(False, '手机号或密码错误', status=401)
+
+    if not user.verify_password(data['password']):
+        logger.info(f"Password verification failed for user {user.id}")
         return json_response(False, '手机号或密码错误', status=401)
 
     if user.is_banned:
@@ -154,8 +132,12 @@ def login():
     user.last_login_time = datetime.utcnow()
     try:
         db.session.commit()
-        token = jwt.encode({'user_id': user.id, 'type': 'user'}, current_app.config['JWT_SECRET_KEY'], algorithm='HS256')
-        logger.info(f"User {user.id} logged in")
+        token = jwt.encode(
+            {'user_id': user.id, 'type': 'user', 'exp': datetime.utcnow() + timedelta(hours=1)},
+            current_app.config['JWT_SECRET_KEY'],
+            algorithm='HS256'
+        )
+        logger.info(f"User {user.id} logged in, token generated: {token}")
         return json_response(True, '登录成功', {'token': token, 'user': user.to_dict()})
     except Exception as e:
         db.session.rollback()
@@ -254,7 +236,7 @@ def get_profile(current_user):
         user_data['id_card'] = mask_id_card(decrypted_id_card)
         user_data['id_card_full'] = False
     logger.info(f"User {current_user.id} fetched profile")
-    return json_response(True, '获取用户信息成功', user_data)
+    return json_response(True, '获取用户信息成功', current_user.to_dict(include_sensitive=True))
 
 @auth_bp.route('/profile', methods=['PUT'])
 @token_required

@@ -23,8 +23,8 @@ def get_hot_products(limit: int = 10) -> List[Product]:
         status='approved',
         is_deleted=False
     ).order_by(
-        Product.view_count.desc(),
-        Product.create_time.desc()
+        Product.views.desc(),
+        Product.created_at.desc()
     ).limit(limit).all()
 
 

@@ -97,13 +97,13 @@ const banners = ref([
   {
     title: '二手交易平台',
     description: '安全、便捷的二手商品交易服务',
-    image: 'https://via.placeholder.com/1200x400/409EFF/FFFFFF?text=二手交易平台',
+    image: '/src/pic/lun1.jpg',
     link: '/'
   },
   {
     title: '特价商品',
     description: '限时特价，低至5折',
-    image: 'https://via.placeholder.com/1200x400/67C23A/FFFFFF?text=特价商品',
+    image: '/src/pic/lun2.png',
     link: '/'
   },
   {

@@ -64,14 +64,14 @@
         </div>
       </div>
     </header>
-    
+
     <!-- 主要内容区域 -->
     <main class="main-content">
       <div class="container">
         <router-view />
       </div>
     </main>
-    
+
     <!-- 页脚 -->
     <footer class="footer">
       <div class="container">

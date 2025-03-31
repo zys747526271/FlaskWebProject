@@ -15,7 +15,7 @@ def json_response(success, message, data=None, status=200):
     """统一响应格式"""
     return jsonify({'success': success, 'message': message, 'data': data}), status
 
-@product_bp.route('/products', methods=['GET'])
+@product_bp.route('/', methods=['GET'])
 @cache.cached(timeout=300, query_string=True)
 def get_products():
     """获取商品列表，支持分页、排序和搜索
@@ -57,7 +57,7 @@ def get_products():
         'current_page': page
     })
 
-@product_bp.route('/products/<int:product_id>', methods=['GET'])
+@product_bp.route('/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     """获取商品详情
 
@@ -81,7 +81,7 @@ def get_product(product_id):
         logger.error(f"Failed to increment views for product {product_id}: {str(e)}")
         return json_response(False, f'获取详情失败: {str(e)}', status=500)
 
-@product_bp.route('/products', methods=['POST'])
+@product_bp.route('/', methods=['POST'])
 @token_required
 def create_product(current_user):
     """创建商品
@@ -134,7 +134,7 @@ def create_product(current_user):
         logger.error(f"User {current_user.id} failed to create product: {str(e)}")
         return json_response(False, f'创建失败: {str(e)}', status=500)
 
-@product_bp.route('/products/<int:product_id>', methods=['PUT'])
+@product_bp.route('/<int:product_id>', methods=['PUT'])
 @token_required
 def update_product(current_user, product_id):
     """更新商品信息
@@ -195,7 +195,7 @@ def update_product(current_user, product_id):
         logger.error(f"User {current_user.id} failed to update product {product_id}: {str(e)}")
         return json_response(False, f'更新失败: {str(e)}', status=500)
 
-@product_bp.route('/products/<int:product_id>/images', methods=['POST'])
+@product_bp.route('/<int:product_id>/images', methods=['POST'])
 @token_required
 def upload_product_images(current_user, product_id):
     """上传商品图片
@@ -242,7 +242,7 @@ def upload_product_images(current_user, product_id):
 
     return json_response(False, '没有有效图片上传', status=400)
 
-@product_bp.route('/products/<int:product_id>', methods=['DELETE'])
+@product_bp.route('/<int:product_id>', methods=['DELETE'])
 @token_required
 def delete_product(current_user, product_id):
     """删除商品（软删除）
@@ -271,7 +271,7 @@ def delete_product(current_user, product_id):
         logger.error(f"User {current_user.id} failed to delete product {product_id}: {str(e)}")
         return json_response(False, f'删除失败: {str(e)}', status=500)
 
-@product_bp.route('/products/<int:product_id>/status', methods=['PUT'])
+@product_bp.route('/<int:product_id>/status', methods=['PUT'])
 @admin_required
 def update_product_status(current_admin, product_id):
     """更新商品状态（管理员）
@@ -305,7 +305,7 @@ def update_product_status(current_admin, product_id):
         logger.error(f"Admin {current_admin.id} failed to update product {product_id} status: {str(e)}")
         return json_response(False, f'更新失败: {str(e)}', status=500)
 
-@product_bp.route('/products/recommended', methods=['GET'])
+@product_bp.route('/recommended', methods=['GET'])
 @token_required
 def get_recommended_products_route(current_user):
     """获取推荐商品
@@ -325,7 +325,7 @@ def get_recommended_products_route(current_user):
         logger.error(f"User {current_user.id} failed to fetch recommended products: {str(e)}")
         return json_response(False, f'获取失败: {str(e)}', status=500)
 
-@product_bp.route('/products/hot', methods=['GET'])
+@product_bp.route('/hot', methods=['GET'])
 @cache.cached(timeout=600)  # 缓存10分钟
 def get_hot_products_route():
     """获取热门商品
